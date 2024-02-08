@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,16 +10,16 @@ namespace StreamTracker {
 
 	public class ReadOnlyTrackedStreamStream : Stream, IDisposable {
 		private Int64 _originalLength;
-		private Stream? _parent;
+		private Stream _parent;
 
-		public event TrackedStreamUpdate? ProgressUpdate;
+		public event TrackedStreamUpdate ProgressUpdate;
 
 		public ReadOnlyTrackedStreamStream(Stream stream) {
 			_parent = stream;
 			_originalLength = stream.Length;
 		}
 
-		public Stream? Parent => this._parent;
+		public Stream Parent => this._parent;
 
 		public override Boolean CanRead => this._parent != null && _parent.CanRead;
 		public override Boolean CanSeek => this._parent != null && _parent.CanSeek;

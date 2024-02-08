@@ -1,9 +1,8 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
+    <Version>1.0.1</Version>
+    <TargetFrameworks>net8;net472</TargetFrameworks>
     <PackageId>TheStaticTurtle.Utils.$(AssemblyName)</PackageId>
     <Title>Stream tracker</Title>
     <Authors>TheStaticTurtle</Authors>
@@ -12,18 +11,40 @@
 Can be used for tracking the progress of a copy/upload for example</Description>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageIcon>Icon.png</PackageIcon>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>stream;tracking</PackageTags>
+    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <IsPublishable>True</IsPublishable>
+    <SignAssembly>False</SignAssembly>
+  </PropertyGroup>
+  
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'net472'">
+    <DefineConstants>NETFRAMEWORK472</DefineConstants>
   </PropertyGroup>
 
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'net5'">
+    <DefineConstants>NET5</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8|AnyCPU'">
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8|AnyCPU'">
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  
   <ItemGroup>
-    <None Update="Icon.png">
+    <None Include="LICENSE.txt">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
-    <None Update="README.md">
+    <None Include="README.md">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
-    <None Update="res\Icon.png">
+    <None Include="res\Icon.png">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>

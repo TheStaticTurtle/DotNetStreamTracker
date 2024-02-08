@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 using System.Timers;
 using Timer = System.Timers.Timer;
 
@@ -31,7 +28,7 @@ namespace StreamTracker {
 			}
 		}
 
-		private void UpdateTimer_Elapsed(Object? sender, ElapsedEventArgs e) {
+		private void UpdateTimer_Elapsed(Object sender, ElapsedEventArgs e) {
 			Int64 total = 0;
 			Int64 totalRead = 0;
 			foreach (ReadOnlyTrackedStreamStream trackedStream in trackedStreams) {

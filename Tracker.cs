@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 
 namespace StreamTracker {
 	public delegate void StreamTrackerUpdate(Tracker sender, Int64 read, Int64 total);
@@ -12,8 +14,8 @@ namespace StreamTracker {
 
 		public Boolean IsReadOnly => false;
 
-		public event StreamTrackerUpdatePercentage? ProgressPercentageUpdate;
-		public event StreamTrackerUpdate? ProgressUpdate;
+		public event StreamTrackerUpdatePercentage ProgressPercentageUpdate;
+		public event StreamTrackerUpdate ProgressUpdate;
 
 		public Tracker() : this(Array.Empty<Stream>()) { }
 		public Tracker(Stream stream) : this(new[] { stream }) { }
@@ -31,7 +33,7 @@ namespace StreamTracker {
 		}
 
 		public virtual ReadOnlyTrackedStreamStream Add(Stream item) {
-			ReadOnlyTrackedStreamStream trackedStream = new(item);
+			ReadOnlyTrackedStreamStream trackedStream = new ReadOnlyTrackedStreamStream(item);
 			Add(trackedStream);
 			return trackedStream;
 		}
@@ -40,7 +42,7 @@ namespace StreamTracker {
 		}
 
 		public virtual Boolean Remove(Stream item) {
-			ReadOnlyTrackedStreamStream? trackedStream = trackedStreams.Find(x => x.Parent == item);
+			ReadOnlyTrackedStreamStream trackedStream = trackedStreams.Find(x => x.Parent == item);
 			if (trackedStream != null) {
 				return Remove(trackedStream);
 			}
@@ -54,7 +56,7 @@ namespace StreamTracker {
 		}
 
 		public Boolean Contains(Stream item) {
-			ReadOnlyTrackedStreamStream? trackedStream = trackedStreams.Find(x => x.Parent == item);
+			ReadOnlyTrackedStreamStream trackedStream = trackedStreams.Find(x => x.Parent == item);
 			return trackedStream != null;
 		}
 		public Boolean Contains(ReadOnlyTrackedStreamStream item) {
